@@ -4,8 +4,6 @@ import { SignOut } from "@/components/signout-button";
 import { auth } from "@/auth";
 import Image from "next/image";
 
-// import { createSnippet } from "./actions";
-
 export default async function Home() {
   const session = await auth()
 
@@ -17,7 +15,7 @@ export default async function Home() {
         !session
           ? <SignIn />
           : <div className="flex flex-row justify-center items-center gap-3">
-            <Image width={24} height={24} className="w-6 rounded-full" src={session.user.image!} alt="User Avatar" />
+            <Image width={24} height={24} className="w-6 rounded-full" src={session?.user?.image!} alt="User Avatar" />
             <span>
               Hello, {session?.user?.name}
             </span>
