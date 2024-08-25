@@ -1,6 +1,6 @@
 // https://www.dhiwise.com/post/crafting-beautiful-code-blocks-with-react-syntax-highlighter
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function CodeExample() {
   const codeString = `button {
@@ -14,8 +14,9 @@ export default function CodeExample() {
     lineHeight: '1.5',
     fontSize: '1rem',
     borderRadius: '6px',
-    backgroundColor: '#111',
-    padding: '8px 4px'
+    border: 'none',
+    backgroundColor: '#090A0B',
+    padding: '8px 16px 8px 8px',
   };
 
   const CustomPre = (props: any) => <pre id="customPreTag" {...props} />;
@@ -24,7 +25,7 @@ export default function CodeExample() {
     <SyntaxHighlighter
       language="css"
       PreTag={CustomPre}
-      style={oneDark}
+      style={tomorrow}
       customStyle={customStyle}
       showLineNumbers
     >
