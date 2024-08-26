@@ -37,8 +37,11 @@ CREATE TABLE `session` (
 CREATE TABLE `snippets` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
+	`user` text NOT NULL,
 	`content` text NOT NULL,
-	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL
+	`visibility` text DEFAULT 'public' NOT NULL,
+	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
+	FOREIGN KEY (`user`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `user` (

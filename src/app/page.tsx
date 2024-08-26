@@ -7,7 +7,7 @@ import Image from "next/image";
 export default async function Home() {
   const session = await auth()
 
-  // if (!session?.user) return null
+  const isAdmin = session?.user?.role === "admin" ? "👑 " : "";
 
   return (
     <main className="flex min-h-screen flex-col justify-between items-center p-24 border-[--foreground-rgb] border-2 rounded-xl">
@@ -17,7 +17,7 @@ export default async function Home() {
           : <div className="flex flex-row justify-center items-center gap-3">
             <Image width={24} height={24} className="w-6 rounded-full" src={session?.user?.image!} alt="User Avatar" />
             <span>
-              Hello, {session?.user?.name}
+              Hello, {isAdmin}{session?.user?.name}
             </span>
             <SignOut />
           </div>
