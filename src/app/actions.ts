@@ -22,3 +22,8 @@ export async function createSnippet(text: string) {
     id
   }
 }
+
+export async function getSnippets() {
+  const allSnippets = await db.select().from(snippets)
+  return allSnippets
+}

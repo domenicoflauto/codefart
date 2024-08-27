@@ -5,9 +5,12 @@ import { auth } from "@/auth";
 import Image from "next/image";
 
 import CreateSnippetForm from "@/components/CreateSnippetForm";
+import AllSnippets from "@/components/allSnippets";
+import { getSnippets } from "./actions";
 
 export default async function Home() {
   const session = await auth()
+  const snippets = await getSnippets()
 
   const isAdmin = session?.user?.role === "admin" ? "👑 " : "";
 
@@ -31,6 +34,11 @@ export default async function Home() {
         </button>
         <CodeExample />
         {isAdmin && <CreateSnippetForm />}
+
+        {
+          snippets && <AllSnippets snippets={snippets} />
+        }
+
 
       </div>
       <span className="text-xs opacity-35">© 2024 - All rights reserved</span>
