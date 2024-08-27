@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 
 import { generateRandomString } from "@/utils";
 
-export async function createSnippet() {
+export async function createSnippet(text: string) {
   // user auth check
   const session = await auth()
   const id = generateRandomString(16)
@@ -14,7 +14,7 @@ export async function createSnippet() {
   await db.insert(snippets).values({
     id: id,
     name: id,
-    content: "a brand new snippet",
+    content: text,
     user: session?.user?.id!
   })
 

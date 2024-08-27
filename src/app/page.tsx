@@ -4,7 +4,7 @@ import { SignOut } from "@/components/signout-button";
 import { auth } from "@/auth";
 import Image from "next/image";
 
-import CreateButton from "@/components/CreateButton";
+import CreateSnippetForm from "@/components/CreateSnippetForm";
 
 export default async function Home() {
   const session = await auth()
@@ -21,7 +21,6 @@ export default async function Home() {
             <span>
               Hello, {isAdmin}{session?.user?.name}
             </span>
-            {isAdmin && <CreateButton />}
             <SignOut />
           </div>
       }
@@ -31,6 +30,8 @@ export default async function Home() {
           Click me
         </button>
         <CodeExample />
+        {isAdmin && <CreateSnippetForm />}
+
       </div>
       <span className="text-xs opacity-35">© 2024 - All rights reserved</span>
     </main>
