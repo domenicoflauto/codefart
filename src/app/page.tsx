@@ -4,6 +4,8 @@ import { SignOut } from "@/components/signout-button";
 import { auth } from "@/auth";
 import Image from "next/image";
 
+import CreateButton from "@/components/CreateButton";
+
 export default async function Home() {
   const session = await auth()
 
@@ -19,6 +21,7 @@ export default async function Home() {
             <span>
               Hello, {isAdmin}{session?.user?.name}
             </span>
+            {isAdmin && <CreateButton />}
             <SignOut />
           </div>
       }
