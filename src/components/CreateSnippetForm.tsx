@@ -1,17 +1,21 @@
 "use client"
 
 import { useState, ChangeEvent } from "react";
+import { useUmami } from 'next-umami'
 
 type CreateSnippetFormProps = {
   createSnippet: (text: string) => void;
 };
 
 export default function CreateSnippetForm({ createSnippet }: CreateSnippetFormProps) {
-
   const [snippetValue, setSnippetValue] = useState<string>("");
+  const umami = useUmami()
 
   // Event handler for input change
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    umami.event('Click Add', {
+      userAgent: window.navigator.userAgent,
+    })
     setSnippetValue(e.target.value);
   };
 

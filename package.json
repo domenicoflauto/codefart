@@ -16,6 +16,7 @@
     "drizzle-orm": "^0.33.0",
     "next": "14.2.5",
     "next-auth": "5.0.0-beta.20",
+    "next-umami": "^0.0.4",
     "react": "^18",
     "react-dom": "^18",
     "react-syntax-highlighter": "^15.5.0"

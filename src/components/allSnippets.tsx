@@ -3,6 +3,7 @@ import { deleteSnippet, createSnippet } from "@/app/actions";
 import { useState } from "react";
 import CreateSnippetForm from "@/components/CreateSnippetForm";
 import { generateRandomString } from "@/utils";
+import { useUmami } from 'next-umami'
 
 type snippet = {
   id: string;
@@ -69,12 +70,14 @@ export function Snippet({
   deleteSnippet,
   isAdmin
 }: SnippetProps) {
+  const umami = useUmami()
 
   // Event handler for deleting a todo item
   const handleDelete = () => {
     if (confirm("Are you sure you want to delete this todo?")) {
       deleteSnippet(snippet.id);
     }
+    umami.event('Delete snippet')
   };
 
   return (
