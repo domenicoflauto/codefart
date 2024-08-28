@@ -1,18 +1,24 @@
 "use client"
 
-import { createSnippet } from "@/app/actions";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
-import { snippet } from "@/types/snippetType";
+type CreateSnippetFormProps = {
+  createSnippet: (text: string) => void;
+};
 
-export default function CreateSnippetForm() {
+export default function CreateSnippetForm({ createSnippet }: CreateSnippetFormProps) {
 
   const [snippetValue, setSnippetValue] = useState<string>("");
 
+  // Event handler for input change
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSnippetValue(e.target.value);
+  };
+
   const handleCreateSnippet = async () => {
-    const snippet = await createSnippet(snippetValue);
     // find a better way to refresh the list
-    window.location.reload();
+    // window.location.reload();
+    createSnippet(snippetValue);
     setSnippetValue("");
   }
 
@@ -22,7 +28,7 @@ export default function CreateSnippetForm() {
         type="text"
         placeholder="Snippet content"
         value={snippetValue}
-        onChange={(e) => setSnippetValue(e.target.value)}
+        onChange={handleInput}
         className="bg-[#f5f5f5] text-[#111111] px-2 py-1 rounded-md"
       />
       <button

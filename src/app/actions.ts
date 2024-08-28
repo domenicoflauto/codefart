@@ -5,13 +5,11 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db"
 import { snippets } from "@/db/schema/snippets";
 import { auth } from "@/auth";
-import { generateRandomString } from "@/utils";
 import { eq } from "drizzle-orm";
 
-export async function createSnippet(text: string) {
+export async function createSnippet(text: string, id: string) {
   // user auth check
   const session = await auth()
-  const id = generateRandomString(16)
   
   await db.insert(snippets).values({
     id: id,

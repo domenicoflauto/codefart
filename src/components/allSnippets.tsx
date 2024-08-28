@@ -1,6 +1,8 @@
 "use client"
-import { deleteSnippet } from "@/app/actions";
-import { useEffect, useState } from "react";
+import { deleteSnippet, createSnippet } from "@/app/actions";
+import { useState } from "react";
+import CreateSnippetForm from "@/components/CreateSnippetForm";
+import { generateRandomString } from "@/utils";
 
 type snippet = {
   id: string;
@@ -13,27 +15,35 @@ type snippet = {
 
 interface AllSnippetsProps {
   snippets: snippet[];
+  session: any;
 }
 
 interface SnippetProps {
   snippet: snippet;
   deleteSnippet: (id: string) => void;
+  isAdmin: boolean;
 }
-
 
 export default function AllSnippets({
   snippets,
+  session
 }: AllSnippetsProps) {
   const [snippetItems, setSnippetItems] = useState<snippet[]>(snippets!);
 
-  useEffect(() => {
-    setSnippetItems(snippets);
-  }, [snippets]);
+  const isAdmin = session?.user?.role === "admin"
 
-  // const handleAddSnippet = (newSnippet: snippet) => {
-  //   setSnippetItems([...snippetItems, newSnippet]);
-  // };
-
+  const addSnippetItem = (text: string) => {
+    const id = generateRandomString(16)
+    createSnippet(text, id);
+    setSnippetItems((prev) => [...prev, {
+      id,
+      name: id,
+      user: session?.user?.id!,
+      content: text,
+      visibility: "public",
+      createdAt: new Date().toISOString()
+    }]);
+  }
 
   // Function to delete a todo item
   const deleteSnippetItem = (id: string) => {
@@ -44,9 +54,10 @@ export default function AllSnippets({
   return (
     <>
       <div className="w-full flex flex-col mt-8 gap-2">
+        {isAdmin && <CreateSnippetForm createSnippet={addSnippetItem} />}
         Snippets:
         {snippetItems.map((snippet) => (
-          <Snippet key={snippet.id} snippet={snippet} deleteSnippet={deleteSnippetItem} />
+          <Snippet isAdmin={isAdmin} key={snippet.id} snippet={snippet} deleteSnippet={deleteSnippetItem} />
         ))}
       </div>
     </>
@@ -55,7 +66,8 @@ export default function AllSnippets({
 
 export function Snippet({
   snippet,
-  deleteSnippet
+  deleteSnippet,
+  isAdmin
 }: SnippetProps) {
 
   // Event handler for deleting a todo item
@@ -69,7 +81,7 @@ export function Snippet({
     <div key={snippet?.id} className="flex flex-row justify-between items-center p-4 rounded-md">
       <div className="text-sm">{snippet?.content}</div>
       <div className="text-sm">{snippet?.createdAt}</div>
-      <button onClick={handleDelete}>Delete</button>
+      {isAdmin && <button onClick={handleDelete}>Delete</button>}
     </div>
   )
 }

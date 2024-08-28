@@ -4,7 +4,6 @@ import { SignOut } from "@/components/signout-button";
 import { auth } from "@/auth";
 import Image from "next/image";
 
-import CreateSnippetForm from "@/components/CreateSnippetForm";
 import AllSnippets from "@/components/allSnippets";
 import { getSnippets } from "./actions";
 
@@ -33,10 +32,9 @@ export default async function Home() {
           Click me
         </button>
         <CodeExample />
-        {isAdmin && <CreateSnippetForm />}
 
         {
-          snippets && <AllSnippets snippets={snippets} />
+          snippets && <AllSnippets session={session} snippets={snippets} />
         }
 
 
