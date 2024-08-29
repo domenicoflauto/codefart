@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google"
+import { cn } from "@/lib/utils"
 import { Analytics } from "@vercel/analytics/react"
 import "./globals.css";
 
 import UmamiProvider from 'next-umami'
 
-const inter = Inter({ subsets: ["latin"] });
-
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 export const metadata: Metadata = {
   title: "Codefart",
   description: "Homepage of experiments, trash, etc.",
@@ -23,7 +26,13 @@ export default function RootLayout({
         <UmamiProvider websiteId="30922084-df7f-48c8-a600-55fad18ed1f1" />
       </head>
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        {children}</body>
       <Analytics />
     </html>
   );
