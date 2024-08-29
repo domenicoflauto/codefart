@@ -4,6 +4,7 @@ import { SignOut } from "@/components/signout-button";
 import { auth } from "@/auth";
 import Image from "next/image";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import AllSnippets from "@/components/allSnippets";
 import { getSnippets } from "./actions";
 
@@ -12,6 +13,8 @@ export default async function Home() {
   const snippets = await getSnippets()
 
   const isAdmin = session?.user?.role === "admin" ? "👑 " : "";
+  const avatar = session?.user?.image;
+  const initials = session?.user?.name?.split(" ").map((n: string) => n[0]).join("");
 
   return (
     <main className="flex min-h-screen flex-col justify-between items-center p-24 border-[--foreground-rgb] border-2 rounded-xl">
@@ -20,6 +23,14 @@ export default async function Home() {
           ? <SignIn />
           : <div className="flex flex-row justify-center items-center gap-3">
             <Image width={24} height={24} className="w-6 rounded-full" src={session?.user?.image!} alt="User Avatar" />
+            {/* {
+              avatar &&
+              <Avatar >
+                <AvatarImage src={avatar} />
+                <AvatarFallback>{initials}</AvatarFallback>
+              </Avatar>
+            } */}
+
             <span>
               Hello, {isAdmin}{session?.user?.name}
             </span>
