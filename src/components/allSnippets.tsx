@@ -4,6 +4,35 @@ import { useState } from "react";
 import CreateSnippetForm from "@/components/CreateSnippetForm";
 import { generateRandomString } from "@/utils";
 import { useUmami } from 'next-umami'
+import { Button } from "./ui/button";
+import CodeExample from "./CodeExample";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CopyIcon,
+  EyeIcon,
+  EyeOffIcon,
+  MoreVerticalIcon,
+  TrashIcon
+} from 'lucide-react'
 
 type snippet = {
   id: string;
@@ -30,6 +59,11 @@ export default function AllSnippets({
   session
 }: AllSnippetsProps) {
   const [snippetItems, setSnippetItems] = useState<snippet[]>(snippets!);
+  const [expandedRow, setExpandedRow] = useState<string | null>(null)
+
+  const toggleExpand = (id: string) => {
+    setExpandedRow(expandedRow === id ? null : id)
+  }
 
   const isAdmin = session?.user?.role === "admin"
 
@@ -53,15 +87,80 @@ export default function AllSnippets({
   };
 
   return (
-    <>
+    <div className="container mx-auto p-4">
       <div className="w-full flex flex-col mt-8 gap-2">
         {isAdmin && <CreateSnippetForm createSnippet={addSnippetItem} />}
-        Snippets:
-        {snippetItems.map((snippet) => (
-          <Snippet isAdmin={isAdmin} key={snippet.id} snippet={snippet} deleteSnippet={deleteSnippetItem} />
-        ))}
       </div>
-    </>
+      <br />
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[50px]"></TableHead>
+            <TableHead>Author</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Language</TableHead>
+            <TableHead className="w-[100px]">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {snippetItems.map((snippet) => (
+            <>
+              <TableRow key={snippet.id}>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => toggleExpand(snippet.id)}
+                    aria-label={expandedRow === snippet.id ? "Collapse" : "Expand"}
+                  >
+                    {expandedRow === snippet.id ? (
+                      <ChevronUpIcon className="h-4 w-4" />
+                    ) : (
+                      <ChevronDownIcon className="h-4 w-4" />
+                    )}
+                  </Button>
+                </TableCell>
+                <TableCell>{snippet.user}</TableCell>
+                <TableCell>{snippet.createdAt}</TableCell>
+                <TableCell>{snippet.name}</TableCell>
+                <TableCell>{snippet.visibility}</TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreVerticalIcon className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      {isAdmin && (
+                        <DropdownMenuItem onClick={e => deleteSnippetItem(snippet.id)}>
+                          <TrashIcon className="h-4 w-4 mr-2" />
+                          Delete
+                        </DropdownMenuItem>)
+                      }
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+              {expandedRow === snippet.id && (
+                <TableRow>
+                  <TableCell colSpan={6} className="p-0">
+                    <div className="p-4">
+                      <CodeExample
+                        code={snippet.content}
+                        language={snippet.visibility}
+                        fileName={`${snippet.name}.${snippet.visibility}`}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 
