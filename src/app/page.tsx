@@ -1,6 +1,4 @@
 import CodeExample from "@/components/CodeExample";
-import { SignIn } from "@/components/signin-button";
-import { SignOut } from "@/components/signout-button";
 import { auth, signIn, signOut } from "@/auth";
 
 
@@ -23,6 +21,18 @@ export default async function Home() {
     await signOut()
   }
 
+  const codeString = `<style>
+    button {
+      background-color: #111111;
+      color: #F5F5F5;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    </style>
+    <body>
+      <button>Click me</button>
+    </body>`;
+
   return (
     <main className="w-full  flex min-h-screen flex-col justify-between items-center p-24">
       <TopBar
@@ -33,10 +43,8 @@ export default async function Home() {
 
       <div className="flex flex-col justify-center items-center">
         <p>Homepage of experiments, trash, etc.</p>
-        <button style={{ backgroundColor: "#111111", color: "#f5f5f5", padding: "8px 12px", borderRadius: "6px" }}>
-          Click me
-        </button>
-        <CodeExample />
+        <br />
+        <CodeExample code={codeString} language="html" fileName="snippet 1" />
 
         {
           snippets && <AllSnippets session={session} snippets={snippets} />
