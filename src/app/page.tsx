@@ -1,42 +1,36 @@
 import CodeExample from "@/components/CodeExample";
 import { SignIn } from "@/components/signin-button";
 import { SignOut } from "@/components/signout-button";
-import { auth } from "@/auth";
-import Image from "next/image";
+import { auth, signIn, signOut } from "@/auth";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 import AllSnippets from "@/components/allSnippets";
 import { getSnippets } from "./actions";
+
+import { TopBar } from "@/components/TopBar";
 
 export default async function Home() {
   const session = await auth()
   const snippets = await getSnippets()
 
-  const isAdmin = session?.user?.role === "admin" ? "👑 " : "";
-  const avatar = session?.user?.image;
-  const initials = session?.user?.name?.split(" ").map((n: string) => n[0]).join("");
+  const handleLogin = async () => {
+    "use server"
+    await signIn()
+  }
+
+  const handleLogout = async () => {
+    "use server"
+    await signOut()
+  }
 
   return (
-    <main className="flex min-h-screen flex-col justify-between items-center p-24 border-[--foreground-rgb] border-2 rounded-xl">
-      {
-        !session
-          ? <SignIn />
-          : <div className="flex flex-row justify-center items-center gap-3">
-            <Image width={24} height={24} className="w-6 rounded-full" src={session?.user?.image!} alt="User Avatar" />
-            {/* {
-              avatar &&
-              <Avatar >
-                <AvatarImage src={avatar} />
-                <AvatarFallback>{initials}</AvatarFallback>
-              </Avatar>
-            } */}
+    <main className="w-full  flex min-h-screen flex-col justify-between items-center p-24">
+      <TopBar
+        session={session}
+        login={handleLogin}
+        logout={handleLogout}
+      />
 
-            <span>
-              Hello, {isAdmin}{session?.user?.name}
-            </span>
-            <SignOut />
-          </div>
-      }
       <div className="flex flex-col justify-center items-center">
         <p>Homepage of experiments, trash, etc.</p>
         <button style={{ backgroundColor: "#111111", color: "#f5f5f5", padding: "8px 12px", borderRadius: "6px" }}>
