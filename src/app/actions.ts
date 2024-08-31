@@ -6,8 +6,9 @@ import { db } from "@/db"
 import { snippets } from "@/db/schema/snippets";
 import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
+import { users } from "@/db/schema/users";
 
-export async function createSnippet(text: string, id: string) {
+export async function createSnippet(text: string, id: string, language: string) {
   // user auth check
   const session = await auth()
   
@@ -15,7 +16,8 @@ export async function createSnippet(text: string, id: string) {
     id: id,
     name: id,
     content: text,
-    user: session?.user?.id!
+    user: session?.user?.id!,
+    language: language
   })
 
   return {
@@ -24,7 +26,17 @@ export async function createSnippet(text: string, id: string) {
 }
 
 export async function getSnippets() {
-  const allSnippets = await db.select().from(snippets)
+  const allSnippets = await db.select({
+    userId: users.id,
+    id: snippets.id,
+    name: snippets.name,
+    content: snippets.content,
+    visibility: snippets.visibility,
+    createdAt: snippets.createdAt,
+    userName: users.name,
+    language: snippets.language
+  }).from(snippets).leftJoin(users, eq(snippets.user, users.id))
+  console.log('getting all snippets', allSnippets)
   return allSnippets
 }
 

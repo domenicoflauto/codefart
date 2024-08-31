@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
+import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
 
 export const snippets = sqliteTable('snippets', {
   id: text('id').notNull().primaryKey(),
@@ -9,6 +10,7 @@ export const snippets = sqliteTable('snippets', {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   content: text('content').notNull(),
+  language: text('language').notNull(),
   visibility: text("visibility", { enum: ["private", "public"] }).notNull().default("public"),
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 });

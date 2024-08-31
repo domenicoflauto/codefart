@@ -56,7 +56,7 @@ export default function CodeExample({ code, language, fileName }:
         </div>
       )}
       <div className="flex flex-col md:flex-row">
-        <div className="relative flex-1">
+        <div className="relative flex-1 overflow-hidden">
           <Prism
             language={language}
             className="p-4 text-sm overflow-x-auto"

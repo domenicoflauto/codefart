@@ -46,9 +46,7 @@ export default async function Home() {
         <br />
         <CodeExample code={codeString} language="html" fileName="snippet 1" />
 
-        {
-          snippets && <AllSnippets session={session} snippets={snippets} />
-        }
+        {snippets && <AllSnippets session={session} snippets={snippets} />}
 
 
       </div>

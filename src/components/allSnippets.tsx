@@ -24,24 +24,23 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import {
-  CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  CopyIcon,
-  EyeIcon,
-  EyeOffIcon,
   MoreVerticalIcon,
   TrashIcon
 } from 'lucide-react'
 
 type snippet = {
+  userId: string | null;
   id: string;
   name: string;
-  user: string;
   content: string;
   visibility: "private" | "public";
   createdAt: string;
+  userName: string | null;
+  language: string;
 };
+
 
 interface AllSnippetsProps {
   snippets: snippet[];
@@ -67,16 +66,19 @@ export default function AllSnippets({
 
   const isAdmin = session?.user?.role === "admin"
 
-  const addSnippetItem = (text: string) => {
+  const addSnippetItem = (text: string, language: string) => {
     const id = generateRandomString(16)
-    createSnippet(text, id);
+    createSnippet(text, id, language);
     setSnippetItems((prev) => [...prev, {
       id,
+      userId: session?.user?.id!,
       name: id,
       user: session?.user?.id!,
       content: text,
+      language: "javascript",
       visibility: "public",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      userName: session?.user?.name
     }]);
   }
 
@@ -121,10 +123,10 @@ export default function AllSnippets({
                     )}
                   </Button>
                 </TableCell>
-                <TableCell>{snippet.user}</TableCell>
+                <TableCell>{snippet.userName}</TableCell>
                 <TableCell>{snippet.createdAt}</TableCell>
                 <TableCell>{snippet.name}</TableCell>
-                <TableCell>{snippet.visibility}</TableCell>
+                <TableCell>{snippet.language}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -149,7 +151,7 @@ export default function AllSnippets({
                     <div className="p-4">
                       <CodeExample
                         code={snippet.content}
-                        language={snippet.visibility}
+                        language={snippet.language}
                         fileName={`${snippet.name}.${snippet.visibility}`}
                       />
                     </div>
