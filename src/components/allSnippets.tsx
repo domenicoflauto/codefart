@@ -75,7 +75,7 @@ export default function AllSnippets({
       name: id,
       user: session?.user?.id!,
       content: text,
-      language: "javascript",
+      language,
       visibility: "public",
       createdAt: new Date().toISOString(),
       userName: session?.user?.name
@@ -109,11 +109,12 @@ export default function AllSnippets({
           {snippetItems.map((snippet) => (
             <>
               <TableRow key={snippet.id}>
-                <TableCell>
+                <TableCell key={`${snippet.id}-cell_button`}>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => toggleExpand(snippet.id)}
+                    key={`${snippet.id}-expand-button`}
                     aria-label={expandedRow === snippet.id ? "Collapse" : "Expand"}
                   >
                     {expandedRow === snippet.id ? (
@@ -123,11 +124,11 @@ export default function AllSnippets({
                     )}
                   </Button>
                 </TableCell>
-                <TableCell>{snippet.userName}</TableCell>
-                <TableCell>{snippet.createdAt}</TableCell>
-                <TableCell>{snippet.name}</TableCell>
-                <TableCell>{snippet.language}</TableCell>
-                <TableCell>
+                <TableCell key={`${snippet.id}-cell_username`}>{snippet.userName}</TableCell>
+                <TableCell key={`${snippet.id}-created_at`}>{snippet.createdAt}</TableCell>
+                <TableCell key={`${snippet.id}-cell_name`}>{snippet.name}</TableCell>
+                <TableCell key={`${snippet.id}-cell_language`}>{snippet.language}</TableCell>
+                <TableCell key={`${snippet.id}-cell_dropdown`}>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="sm">

@@ -36,7 +36,6 @@ export async function getSnippets() {
     userName: users.name,
     language: snippets.language
   }).from(snippets).leftJoin(users, eq(snippets.user, users.id))
-  console.log('getting all snippets', allSnippets)
   return allSnippets
 }
 

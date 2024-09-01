@@ -6,6 +6,7 @@ import AllSnippets from "@/components/allSnippets";
 import { getSnippets } from "./actions";
 
 import { TopBar } from "@/components/TopBar";
+import { Flex, Text, Button } from '@radix-ui/themes';
 
 export default async function Home() {
   const session = await auth()
@@ -40,6 +41,11 @@ export default async function Home() {
         login={handleLogin}
         logout={handleLogout}
       />
+
+      <Flex direction="column" gap="2">
+        <Text>Hello from Radix Themes :)</Text>
+        <Button>Let&apos;s go</Button>
+      </Flex>
 
       <div className="flex flex-col justify-center items-center">
         <p>Homepage of experiments, trash, etc.</p>

@@ -3,6 +3,8 @@ import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { Analytics } from "@vercel/analytics/react"
 import "./globals.css";
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
 
 import UmamiProvider from 'next-umami'
 
@@ -32,7 +34,10 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}</body>
+        <Theme accentColor="amber" grayColor="sand" radius="large" appearance="dark" >
+          {children}
+        </Theme>
+      </body>
       <Analytics />
     </html>
   );
