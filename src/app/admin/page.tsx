@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+import * as Tabs from '@radix-ui/react-tabs';
 
 export default async function Page() {
   const session = await auth()

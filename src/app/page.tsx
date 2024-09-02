@@ -1,26 +1,16 @@
 import CodeExample from "@/components/CodeExample";
-import { auth, signIn, signOut } from "@/auth";
+import { auth } from "@/auth";
 
 
 import AllSnippets from "@/components/allSnippets";
 import { getSnippets } from "./actions";
 
-import { TopBar } from "@/components/TopBar";
 import { Flex, Text, Button } from '@radix-ui/themes';
 
 export default async function Home() {
-  const session = await auth()
   const snippets = await getSnippets()
 
-  const handleLogin = async () => {
-    "use server"
-    await signIn()
-  }
-
-  const handleLogout = async () => {
-    "use server"
-    await signOut()
-  }
+  const session = await auth()
 
   const codeString = `<style>
     button {
@@ -36,11 +26,6 @@ export default async function Home() {
 
   return (
     <main className="w-full  flex min-h-screen flex-col justify-between items-center p-24">
-      <TopBar
-        session={session}
-        login={handleLogin}
-        logout={handleLogout}
-      />
 
       <Flex direction="column" gap="2">
         <Text>Hello from Radix Themes :)</Text>

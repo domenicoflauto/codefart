@@ -42,9 +42,11 @@ export function TopBar({ session, login, logout }:
     setUserName("")
     setRole("")
   }
+
+  const isAdmin = role === "admin"
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm dark:bg-gray-950/90">
-      <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div className="container mx-auto py-2 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,37 +67,40 @@ export function TopBar({ session, login, logout }:
         </Link>
 
         {isLoggedIn ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Avatar>
-                <AvatarImage src={avatar} alt="profile picture" />
-                <AvatarFallback>{initials}</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem disabled>
-                {
-                  role === "admin"
-                    ? <Crown className="mr-2 h-4 w-4" />
-                    : <User className="mr-2 h-4 w-4" />
-                }
-                <span>Welcome, {userName}</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex flex-row items-center gap-4">
+            {isAdmin && <Link href="/admin">Admin</Link>}
+            < DropdownMenu >
+              <DropdownMenuTrigger asChild>
+                <Avatar>
+                  <AvatarImage src={avatar} alt="profile picture" />
+                  <AvatarFallback>{initials}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem disabled>
+                  {
+                    isAdmin
+                      ? <Crown className="mr-2 h-4 w-4" />
+                      : <User className="mr-2 h-4 w-4" />
+                  }
+                  <span>Welcome, {userName}</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         ) : (
           <Button onClick={handleLogin}>Log in</Button>
         )}
       </div>
-    </header>
+    </header >
   )
 }

@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/react"
 import "./globals.css";
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
+import { TopBar } from "@/components/TopBar";
+import { auth, signIn, signOut } from "@/auth";
 
 import UmamiProvider from 'next-umami'
 
@@ -17,11 +19,23 @@ export const metadata: Metadata = {
   description: "Homepage of experiments, trash, etc.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await auth()
+  const handleLogin = async () => {
+    "use server"
+    await signIn()
+  }
+
+  const handleLogout = async () => {
+    "use server"
+    await signOut()
+  }
+
   return (
     <html lang="en">
       <head>
@@ -35,7 +49,14 @@ export default function RootLayout({
         )}
       >
         <Theme accentColor="amber" grayColor="sand" radius="large" appearance="dark" >
-          {children}
+          <TopBar
+            session={session}
+            login={handleLogin}
+            logout={handleLogout}
+          />
+          <div className="container py-16">
+            {children}
+          </div>
         </Theme>
       </body>
       <Analytics />
