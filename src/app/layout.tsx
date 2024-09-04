@@ -4,9 +4,11 @@ import { cn } from "@/lib/utils"
 import { Analytics } from "@vercel/analytics/react"
 import "./globals.css";
 import '@radix-ui/themes/styles.css';
-import { Theme } from '@radix-ui/themes';
 import { TopBar } from "@/components/TopBar";
 import { auth, signIn, signOut } from "@/auth";
+
+import { ThemeProvider } from "@/components/providers"
+
 
 import UmamiProvider from 'next-umami'
 
@@ -48,7 +50,12 @@ export default async function RootLayout({
           fontSans.variable
         )}
       >
-        <Theme accentColor="amber" grayColor="sand" radius="large" appearance="dark" >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <TopBar
             session={session}
             login={handleLogin}
@@ -57,7 +64,7 @@ export default async function RootLayout({
           <div className="container py-16">
             {children}
           </div>
-        </Theme>
+        </ThemeProvider>
       </body>
       <Analytics />
     </html>
