@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ModeToggle } from "../modeToggle";
+import { ModeToggle } from "@/components/ModeToggle";
 
 
 export function TopBar({ session, login, logout }:
@@ -33,7 +33,8 @@ export function TopBar({ session, login, logout }:
     session && (
       setIsLoggedIn(true),
       setUserName(session?.user?.name),
-      setRole(session?.user?.role)
+      setRole(session?.user?.role),
+      setAvatar(session?.user?.image)
     )
   }
 
