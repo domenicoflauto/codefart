@@ -65,10 +65,10 @@ export default function CreateSnippetForm({ createSnippet }: CreateSnippetFormPr
         value={snippetValue}
         onChange={handleInput}
       />
-      <div className="flex flex-row gap-2">
+      <div className="flex md:flex-row gap-2 flex-col w-full">
 
         <Select onOpenChange={handleOpenChange} onValueChange={handleLanguageChange} defaultValue="javascript">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="md:w-[180px] sm:w-full">
             <SelectValue placeholder="Language" />
           </SelectTrigger>
           <SelectContent>
@@ -82,7 +82,7 @@ export default function CreateSnippetForm({ createSnippet }: CreateSnippetFormPr
             <Button
               variant={"outline"}
               className={cn(
-                "w-[280px] justify-start text-left font-normal",
+                "md:w-[280px] sm:w-full justify-start text-left font-normal",
                 !date && "text-muted-foreground"
               )}
             >
