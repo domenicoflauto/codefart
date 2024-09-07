@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await auth();
   return (
     <main className="w-full flex min-h-screen flex-col justify-between items-start">
-      <Flex direction="column" gap="4">
+      {/* <Flex direction="column" gap="4">
         <Flex direction="column" gap="2">
           <Text className="text-sm font-semibold text-indigo-500">
             <span className="dark:bg-gradient-to-r dark:from-indigo-600 dark:to-sky-400 dark:text-transparent dark:bg-clip-text">
@@ -29,7 +29,7 @@ export default async function Home() {
             I don&apos;t care about this website
           </Text>
         </Flex>
-      </Flex>
+      </Flex> */}
       {session?.user?.role === 'admin' && <Chat />}
       <span className="text-xs opacity-35">© 2024 - All rights reserved</span>
     </main>

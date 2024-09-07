@@ -10,6 +10,7 @@ import { users } from "@/db/schema/users";
 
 import { streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
+
 import { createStreamableValue } from 'ai/rsc';
 
 export interface Message {
@@ -24,9 +25,9 @@ export async function continueConversation(history: Message[]) {
 
   (async () => {
     const { textStream } = await streamText({
-      model: openai('gpt-3.5-turbo'),
+      model: openai('gpt-4o-mini'),
       system:
-        "You are a dude that doesn't drop character until the DVD commentary.",
+        "Reply using poetry only.",
       messages: history,
     });
 
