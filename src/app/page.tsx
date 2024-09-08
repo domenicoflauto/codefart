@@ -30,7 +30,7 @@ export default async function Home() {
           </Text>
         </Flex>
       </Flex> */}
-      {session?.user?.role === 'admin' && <Chat />}
+      {session?.user?.role === 'admin' && <Chat user={session.user} />}
       <span className="text-xs opacity-35">© 2024 - All rights reserved</span>
     </main>
   );

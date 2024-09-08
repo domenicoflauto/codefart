@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { JSX, useState } from "react";
 import Link from "next/link";
 import { LogOut, Settings, User, Crown } from 'lucide-react'
 
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ModeToggle } from "@/components/ModeToggle";
+import { Logo } from "@/components/Logo";
 
 
 export function TopBar({ session, login, logout }:
@@ -25,8 +26,6 @@ export function TopBar({ session, login, logout }:
   const [userName, setUserName] = useState(session?.user?.name)
   const [role, setRole] = useState(session?.user?.role)
   const [avatar, setAvatar] = useState(session?.user?.image)
-
-  const initials = session?.user?.name?.split(" ").map((n: string) => n[0]).join("");
 
   const handleLogin = () => {
     login()
@@ -50,21 +49,7 @@ export function TopBar({ session, login, logout }:
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm dark:bg-gray-950/90">
       <div className="container mx-auto py-2 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-6 w-6"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-            <line x1="9" y1="9" x2="9.01" y2="9" />
-            <line x1="15" y1="9" x2="15.01" y2="9" />
-          </svg>
+          <Logo />
           <span className="text-lg font-bold">Codefart</span>
         </Link>
         <div className="flex flex-row items-center gap-4">
@@ -73,10 +58,7 @@ export function TopBar({ session, login, logout }:
               {isAdmin && <Link href="/admin">Admin</Link>}
               < DropdownMenu >
                 <DropdownMenuTrigger asChild>
-                  <Avatar>
-                    <AvatarImage src={avatar} alt="profile picture" />
-                    <AvatarFallback>{initials}</AvatarFallback>
-                  </Avatar>
+                  <UserAvatar user={{ name: userName, image: avatar }} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuItem disabled>
@@ -106,5 +88,15 @@ export function TopBar({ session, login, logout }:
         </div>
       </div>
     </header >
+  )
+}
+
+export const UserAvatar = ({ user }: { user: any }) => {
+  const initials = user?.name?.split(" ").map((n: string) => n[0]).join("");
+  return (
+    <Avatar>
+      <AvatarImage src={user?.image} alt="profile picture" />
+      <AvatarFallback>{initials}</AvatarFallback>
+    </Avatar>
   )
 }
