@@ -6,7 +6,7 @@ import { auth } from '@/auth';
 export default async function Home() {
   const session = await auth();
   return (
-    <main className="w-full flex min-h-screen flex-col justify-between items-start">
+    <main className="w-full min-h-[calc(100vh-4rem)] flex flex-col">
       {/* <Flex direction="column" gap="4">
         <Flex direction="column" gap="2">
           <Text className="text-sm font-semibold text-indigo-500">

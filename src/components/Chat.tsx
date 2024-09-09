@@ -17,9 +17,9 @@ export function Chat({ user }: { user: any }) {
   const [input, setInput] = useState<string>('');
 
   return (
-    <div className='w-full max-w-[540px] m-auto flex flex-col gap-8'>
-      <MessageBubble user={user} role='assistant' content='Hello! How can I help you today?' />
-      <div className='flex flex-col gap-4'>
+    <div className='w-full max-w-[540px] mx-auto flex flex-col gap-4 flex-1'>
+      <div className='flex flex-col gap-4 flex-1'>
+        <MessageBubble user={user} role='assistant' content='Hello! How can I help you today?' />
         {conversation.map((message, index) => (
           <div key={index}>
             <MessageBubble user={user} role={message.role} content={message.content} />
