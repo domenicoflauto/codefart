@@ -40,6 +40,7 @@
     "next-auth": "5.0.0-beta.20",
     "next-themes": "^0.3.0",
     "next-umami": "^0.0.4",
+    "papaparse": "^5.4.1",
     "react": "^18",
     "react-day-picker": "8.10.1",
     "react-dom": "^18",
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.13",

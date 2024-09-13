@@ -1,6 +1,22 @@
+"use client"
+import { useState } from 'react';
+import { CsvUploadButton } from '@/components/UploadButton';
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
-export default async function Home() {
+export default function Home() {
+  const [csvData, setCsvData] = useState<any[]>([]);
+
+  const handleDataParsed = (data: any) => {
+    setCsvData(data);
+  }
   return (
     <main className="w-full min-h-[calc(100vh-4rem)] flex flex-col">
       {/* <Flex direction="column" gap="4">
@@ -27,6 +43,27 @@ export default async function Home() {
         </Flex>
       </Flex> */}
 
+      <CsvUploadButton onDataParsed={handleDataParsed} />
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Date</TableHead>
+            <TableHead>Description</TableHead>
+            <TableHead>Amount(GBP)</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {csvData.length > 0 && (
+            csvData.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row["Date"]}</TableCell>
+                <TableCell>{row["Description"]}</TableCell>
+                <TableCell align='right'>{row["Amount(GBP)"]}</TableCell>
+              </TableRow>
+            )))}
+        </TableBody>
+      </Table>
     </main>
   );
 }
