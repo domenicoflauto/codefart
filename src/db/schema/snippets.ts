@@ -1,7 +1,6 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
-import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
 
 export const snippets = sqliteTable('snippets', {
   id: text('id').notNull().primaryKey(),

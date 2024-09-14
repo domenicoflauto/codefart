@@ -57,7 +57,7 @@ export function TopBar({ session, login, logout }:
             <div className="flex flex-row items-center gap-4">
               {isAdmin && <Link href="/admin">Admin</Link>}
               < DropdownMenu >
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger>
                   <UserAvatar user={{ name: userName, image: avatar }} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">

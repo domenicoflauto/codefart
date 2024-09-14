@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { db } from "@/db"
 import { snippets } from "@/db/schema/snippets";
+import { transactions } from "@/db/schema/transactions";
 import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 import { users } from "@/db/schema/users";
@@ -42,6 +43,20 @@ export async function continueConversation(history: Message[]) {
     messages: history,
     newMessage: stream.value,
   };
+}
+
+type Transaction = {
+  amount: number, description: string, date: string, tags: string
+}
+
+export async function addTransactions(transactionRows: Transaction[]) {
+  await db.insert(transactions).values(
+    transactionRows
+  )
+
+  return {
+    transactionRows
+  }
 }
 
 export async function createSnippet(text: string, id: string, language: string) {

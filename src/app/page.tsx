@@ -10,11 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { addTransactions } from './actions';
 
 export default function Home() {
   const [csvData, setCsvData] = useState<any[]>([]);
 
   const handleDataParsed = (data: any) => {
+    addTransactions(data);
     setCsvData(data);
   }
   return (
@@ -57,13 +59,14 @@ export default function Home() {
           {csvData.length > 0 && (
             csvData.map((row, index) => (
               <TableRow key={index}>
-                <TableCell>{row["Date"]}</TableCell>
-                <TableCell>{row["Description"]}</TableCell>
-                <TableCell align='right'>{row["Amount(GBP)"]}</TableCell>
+                <TableCell>{row["date"]}</TableCell>
+                <TableCell>{row["description"]}</TableCell>
+                <TableCell align='right'>{row["amount"]}</TableCell>
               </TableRow>
             )))}
         </TableBody>
       </Table>
+      <pre>{JSON.stringify(csvData, null, 2)}</pre>
     </main>
   );
 }

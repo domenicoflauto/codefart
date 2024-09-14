@@ -20,6 +20,19 @@ export function CsvUploadButton({ onDataParsed }: CsvUploadButtonProps) {
 
     Papa.parse(file, {
       header: true,
+      transformHeader: (header) => {
+        // Transform the header "Amount(GBP)" to "amount"
+        if (header === 'Amount(GBP)') {
+          return 'amount';
+        }
+        if (header === 'Description') {
+          return 'description';
+        }
+        if (header === 'Date') {
+          return 'date';
+        }
+        return header;
+      },
       complete: (result: { data: any; }) => {
         onDataParsed(result.data);
       },
