@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CsvUploadButton } from '@/components/UploadButton';
 
 import {
@@ -11,14 +11,43 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { addTransactions } from './actions';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const [csvData, setCsvData] = useState<any[]>([]);
+  const [selectedTag, setSelectedTag] = useState("all")
 
   const handleDataParsed = (data: any) => {
-    addTransactions(data);
     setCsvData(data);
   }
+
+  const handleSave = () => {
+    addTransactions(csvData);
+  }
+
+  const handleTags = (value: string) => {
+    setSelectedTag(value)
+  }
+
+  const filteredData = useMemo(() => {
+    if (selectedTag === "all") {
+      return csvData
+    } else {
+      return csvData.filter((item) => item.tags.includes(selectedTag))
+    }
+  }, [csvData, selectedTag])
+
+  useEffect(() => {
+    console.log("csvData", csvData)
+  }, [csvData])
+
   return (
     <main className="w-full min-h-[calc(100vh-4rem)] flex flex-col">
       {/* <Flex direction="column" gap="4">
@@ -62,11 +91,28 @@ export default function Home() {
                 <TableCell>{row["date"]}</TableCell>
                 <TableCell>{row["description"]}</TableCell>
                 <TableCell align='right'>{row["amount"]}</TableCell>
+                <TableCell align='right'>
+                  <Select onValueChange={(value) => {
+                    const updatedData = [...csvData]
+                    updatedData[index].tags = [value]
+                    setCsvData(updatedData)
+                  }}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Tags" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="groceries">Groceries</SelectItem>
+                      <SelectItem value="eating_out">Eating Out</SelectItem>
+                      <SelectItem value="subscriptions">Subscriptions</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </TableCell>
               </TableRow>
             )))}
         </TableBody>
       </Table>
-      <pre>{JSON.stringify(csvData, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(csvData, null, 2)}</pre> */}
+      <Button onClick={handleSave}>Save</Button>
     </main>
   );
 }
