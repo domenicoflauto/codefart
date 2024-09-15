@@ -39,7 +39,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <UmamiProvider websiteId="30922084-df7f-48c8-a600-55fad18ed1f1" />
       </head>
