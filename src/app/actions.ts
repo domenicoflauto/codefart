@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { db } from "@/db"
 import { snippets } from "@/db/schema/snippets";
-import { transactions } from "@/db/schema/transactions";
+import { transactions, tags } from "@/db/schema/transactions";
 import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 import { users } from "@/db/schema/users";
@@ -56,6 +56,23 @@ export async function addTransactions(transactionRows: Transaction[]) {
 
   return {
     transactionRows
+  }
+}
+
+export async function getTags() {
+  const allTags = await db.select({
+    name: tags.name
+  }).from(tags)
+  return { allTags }
+}
+
+export async function createTag(tag: string) {
+  await db.insert(tags).values({
+    name: tag
+  })
+
+  return {
+    tag
   }
 }
 

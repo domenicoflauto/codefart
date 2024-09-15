@@ -1,87 +1,56 @@
-"use client"
-import { useEffect, useMemo, useState } from 'react';
-import { CsvUploadButton } from '@/components/UploadButton';
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { addTransactions } from './actions';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { TransactionsTable } from '@/components/TransactionsTable';
+
 import { Button } from '@/components/ui/button';
 
-export default function Home() {
-  const [csvData, setCsvData] = useState<any[]>([]);
-  const [selectedTag, setSelectedTag] = useState("all")
+import { addTransactions, getTags } from '@/app/actions';
 
-  const handleDataParsed = (data: any) => {
-    setCsvData(data);
-  }
 
-  const handleSave = () => {
-    addTransactions(csvData);
-  }
+export default async function Home() {
 
-  const handleTags = (value: string) => {
-    setSelectedTag(value)
-  }
+  const tags = await getTags()
 
-  const filteredData = useMemo(() => {
-    if (selectedTag === "all") {
-      return csvData
-    } else {
-      return csvData.filter((item) => item.tags.includes(selectedTag))
-    }
-  }, [csvData, selectedTag])
+  const MOCK_DATA = [
+    {
+      date: "2024-09-01",
+      description: "Amazon Fresh",
+      amount: 53.33
+    },
+    {
+      date: "2024-09-02",
+      description: "Tesco",
+      amount: 23.33
+    },
+    {
+      date: "2024-09-03",
+      description: "Uber Eats",
+      amount: 13.10
+    },
+    {
+      date: "2024-09-04",
+      description: "Netflix",
+      amount: 12.99
+    },
+  ]
 
-  useEffect(() => {
-    console.log("csvData", csvData)
-  }, [csvData])
+  // const handleSave = () => {
+  //   addTransactions(csvData);
+  // }
 
   return (
     <main className="w-full min-h-[calc(100vh-4rem)] flex flex-col">
-      {/* <Flex direction="column" gap="4">
-        <Flex direction="column" gap="2">
-          <Text className="text-sm font-semibold text-indigo-500">
-            <span className="dark:bg-gradient-to-r dark:from-indigo-600 dark:to-sky-400 dark:text-transparent dark:bg-clip-text">
-              Experiments
-            </span>
-          </Text>
-          <Text as="p" className="text-2xl/6 tracking-tight text-zinc-950 dark:text-zinc-50">
-            Using tailwindcss, radix-ui, and other cool stuff.
-          </Text>
-        </Flex>
+      <TransactionsTable
+        data={MOCK_DATA}
+        tags={tags.allTags}
+      />
 
-        <Flex direction="column" gap="2" className="mt-6">
-          <Text className="text-sm font-semibold text-indigo-500">
-            <span className="dark:bg-gradient-to-r dark:from-indigo-600 dark:to-sky-400 dark:text-transparent dark:bg-clip-text">
-              Can-do attitude
-            </span>
-          </Text>
-          <Text as="p" className="text-2xl/6 tracking-tight text-zinc-950 dark:text-zinc-50">
-            I don&apos;t care about this website
-          </Text>
-        </Flex>
-      </Flex> */}
-
-      <CsvUploadButton onDataParsed={handleDataParsed} />
-
-      <Table>
+      {/* <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Date</TableHead>
             <TableHead>Description</TableHead>
-            <TableHead>Amount(GBP)</TableHead>
+            <TableHead>Tag</TableHead>
+            <TableHead align='right'>Amount(GBP)</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -90,29 +59,23 @@ export default function Home() {
               <TableRow key={index}>
                 <TableCell>{row["date"]}</TableCell>
                 <TableCell>{row["description"]}</TableCell>
-                <TableCell align='right'>{row["amount"]}</TableCell>
-                <TableCell align='right'>
-                  <Select onValueChange={(value) => {
-                    const updatedData = [...csvData]
-                    updatedData[index].tags = [value]
-                    setCsvData(updatedData)
-                  }}>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Tags" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="groceries">Groceries</SelectItem>
-                      <SelectItem value="eating_out">Eating Out</SelectItem>
-                      <SelectItem value="subscriptions">Subscriptions</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <TableCell>
+                  <TagsDropdown
+                    currentTag={csvData[index].tags}
+                    tags={tags}
+                    handleCreateAndSetTag={value => handleCreateAndSetTag(value, index)}
+                    handleSetTag={value => handleSetTag(value, index)}
+                  />
                 </TableCell>
+                <TableCell align='right'>{row["amount"]}</TableCell>
+
+
               </TableRow>
             )))}
         </TableBody>
-      </Table>
-      {/* <pre>{JSON.stringify(csvData, null, 2)}</pre> */}
-      <Button onClick={handleSave}>Save</Button>
+      </Table> */}
+
+      {/* <Button onClick={handleSave}>Save</Button> */}
     </main>
   );
 }
