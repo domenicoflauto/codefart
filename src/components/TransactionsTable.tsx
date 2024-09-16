@@ -12,18 +12,19 @@ import {
 } from "@/components/ui/table"
 import { TagsDropdown } from '@/components/TagsDropdown';
 import { CsvUploadButton } from '@/components/UploadButton';
+import { Button } from '@/components/ui/button';
 
-import { createTag } from '@/app/actions';
+import { createTag, addTransactions } from '@/app/actions';
 
 type tag = {
   name: string;
 }
 
 export function TransactionsTable({
-  data,
+  // data,
   tags,
 }: {
-  data: any[],
+  // data: any[],
   tags: tag[],
 }) {
   const [csvData, setCsvData] = useState<any[]>([]);
@@ -59,6 +60,10 @@ export function TransactionsTable({
     setCsvData(data);
   }
 
+  const handleSave = () => {
+    addTransactions(csvData);
+  }
+
   return (
     <>
       <CsvUploadButton onDataParsed={handleDataParsed} />
@@ -72,14 +77,14 @@ export function TransactionsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.length > 0 && (
-            data.map((row, index) => (
+          {csvData.length > 0 && (
+            csvData.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row["date"]}</TableCell>
                 <TableCell>{row["description"]}</TableCell>
                 <TableCell>
                   <TagsDropdown
-                    currentTag={data[index].tags}
+                    currentTag={csvData[index].tags}
                     tags={tagList}
                     handleCreateAndSetTag={value => handleCreateAndSetTag(value, index)}
                     handleSetTag={value => handleSetTag(value, index)}
@@ -90,6 +95,7 @@ export function TransactionsTable({
             )))}
         </TableBody>
       </Table>
+      <Button onClick={handleSave}>Save</Button>
     </>
   )
 }

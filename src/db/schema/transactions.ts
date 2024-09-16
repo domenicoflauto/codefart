@@ -9,11 +9,10 @@ export const transactions = sqliteTable('transactions', {
   description: text('description').notNull(),
   date: text('date').notNull(),
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`).notNull(),
-  tags: text('tags').references(() => tags.id, { onDelete: 'cascade' }),
+  tags: text('tags').references(() => tags.name, { onDelete: 'cascade' }),
 });
 
 export const tags = sqliteTable('tags', {
-  id: text('id').notNull().primaryKey().$defaultFn(() => generateRandomString(16)),
-  name: text('name').notNull(),
+  name: text('name').notNull().primaryKey(),
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 });
