@@ -6,7 +6,6 @@ import { readStreamableValue } from 'ai/rsc';
 
 import { Button } from "./ui/button";
 import { Textarea } from "@/components/ui/textarea"
-import { UserAvatar } from '@/components/TopBar/TopBar';
 import { Logo } from './Logo';
 
 // Allow streaming responses up to 30 seconds
@@ -75,7 +74,7 @@ function MessageBubble({ user, role, content }: MessageBubbleProps) {
     return (
       <div className='flex flex-row gap-2 justify-end'>
         <div className='bg-muted p-3 text-sm rounded-xl'>{content}</div>
-        <UserAvatar user={user} />
+        User
       </div>)
   } else if (role === 'assistant') {
     return (
