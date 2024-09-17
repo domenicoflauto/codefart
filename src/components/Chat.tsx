@@ -11,17 +11,17 @@ import { Logo } from './Logo';
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export function Chat({ user }: { user: any }) {
+export function Chat() {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
 
   return (
     <div className='w-full max-w-[540px] mx-auto flex flex-col gap-4 flex-1'>
       <div className='flex flex-col gap-4 flex-1'>
-        <MessageBubble user={user} role='assistant' content='Hello! How can I help you today?' />
+        <MessageBubble role='assistant' content='Hello! How can I help you today?' />
         {conversation.map((message, index) => (
           <div key={index}>
-            <MessageBubble user={user} role={message.role} content={message.content} />
+            <MessageBubble role={message.role} content={message.content} />
           </div>
         ))}
       </div>
@@ -64,12 +64,11 @@ export function Chat({ user }: { user: any }) {
 }
 
 interface MessageBubbleProps {
-  user: any;
   role: 'user' | 'assistant';
   content: string;
 }
 
-function MessageBubble({ user, role, content }: MessageBubbleProps) {
+function MessageBubble({ role, content }: MessageBubbleProps) {
   if (role === 'user') {
     return (
       <div className='flex flex-row gap-2 justify-end'>
