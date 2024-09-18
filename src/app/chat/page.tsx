@@ -1,7 +1,4 @@
-import { Flex, Text } from '@radix-ui/themes';
-
 import { Chat } from '@/components/Chat';
-
 
 export default async function Page() {
   return (

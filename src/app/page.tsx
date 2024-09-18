@@ -1,6 +1,4 @@
-
 import { TransactionsTable } from '@/components/TransactionsTable';
-
 
 import { getTags, logout } from '@/app/actions';
 import { validateRequest } from '@/lib/validate-request';
@@ -38,11 +36,16 @@ export default async function Home() {
 
   return (
     <main className="w-full min-h-[calc(100vh-4rem)] flex flex-col">
-      {user && <form action={logout}>
-        <button>
-          Logout
-        </button>
-      </form>}
+      {user &&
+        <>
+          <form action={logout}>
+            <button>
+              Logout
+            </button>
+          </form>
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+        </>
+      }
       {!user && <Link href="/login">Login</Link>}
       {!user && <Link href="/signup">Sign up</Link>}
       <TransactionsTable

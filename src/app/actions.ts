@@ -14,14 +14,16 @@ import { cookies } from "next/headers";
 import { validateRequest } from "@/lib/validate-request";
 
 export async function logout() {
+  console.log("logging out...")
 	const { session } = await validateRequest();
 	if (!session) {
-		return {
-			error: "Unauthorized"
+    return {
+      error: "Unauthorized"
 		};
 	}
-
+  
 	await lucia.invalidateSession(session.id);
+  console.log("logged out!")
 
 	const sessionCookie = lucia.createBlankSessionCookie();
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
