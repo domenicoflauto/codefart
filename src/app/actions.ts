@@ -75,6 +75,16 @@ export async function addTransactions(transactionRows: Transaction[]) {
   }
 }
 
+export async function getTransactions() {
+  const allTransactions = await db.select({
+    amount: transactions.amount,
+    description: transactions.description,
+    date: transactions.date,
+    tags: transactions.tags
+  }).from(transactions)
+  return { allTransactions }
+}
+
 export async function getTags() {
   const allTags = await db.select({
     name: tags.name

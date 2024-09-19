@@ -21,10 +21,10 @@ type tag = {
 }
 
 export function TransactionsTable({
-  // data,
+  data,
   tags,
 }: {
-  // data: any[],
+  data: any[],
   tags: tag[],
 }) {
   const [csvData, setCsvData] = useState<any[]>([]);
@@ -77,25 +77,26 @@ export function TransactionsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {csvData.length > 0 && (
-            csvData.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row["date"]}</TableCell>
-                <TableCell>{row["description"]}</TableCell>
-                <TableCell>
-                  <TagsDropdown
-                    currentTag={csvData[index].tags}
-                    tags={tagList}
-                    handleCreateAndSetTag={value => handleCreateAndSetTag(value, index)}
-                    handleSetTag={value => handleSetTag(value, index)}
-                  />
-                </TableCell>
-                <TableCell align='right'>{row["amount"]}</TableCell>
-              </TableRow>
-            )))}
+          {
+            data.length > 0 && (
+              data.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>{row["date"]}</TableCell>
+                  <TableCell>{row["description"]}</TableCell>
+                  <TableCell>
+                    <TagsDropdown
+                      currentTag={data[index].tags}
+                      tags={tagList}
+                      handleCreateAndSetTag={value => handleCreateAndSetTag(value, index)}
+                      handleSetTag={value => handleSetTag(value, index)}
+                    />
+                  </TableCell>
+                  <TableCell align='right'>{row["amount"]}</TableCell>
+                </TableRow>
+              )))}
         </TableBody>
       </Table>
-      <Button onClick={handleSave}>Save</Button>
+      {/* <Button onClick={handleSave}>Save</Button> */}
     </>
   )
 }
