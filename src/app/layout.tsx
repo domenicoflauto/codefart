@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { Analytics } from "@vercel/analytics/react"
 import "./globals.css";
 import '@radix-ui/themes/styles.css';
-
+import { validateRequest } from '@/lib/validate-request';
 import { ThemeProvider } from "@/components/providers"
 import { TopBar } from '@/components/Topbar'
 import UmamiProvider from 'next-umami'
@@ -23,6 +23,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await validateRequest();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -41,7 +43,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TopBar />
+          <TopBar user={user} />
 
           <div className="container pt-16">
             {children}

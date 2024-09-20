@@ -1,13 +1,7 @@
 import { TransactionsTable } from '@/components/TransactionsTable';
-
 import { getTags, getTransactions, logout } from '@/app/actions';
-import { validateRequest } from '@/lib/validate-request';
-import Link from 'next/link';
-
 
 export default async function Home() {
-
-  const user = await validateRequest();
   const transactions = await getTransactions()
   const tags = await getTags()
 
@@ -37,21 +31,9 @@ export default async function Home() {
 
   return (
     <main className="w-full min-h-[calc(100vh-4rem)] flex flex-col">
-      {user.user &&
-        <>
-          <form action={logout}>
-            <button>
-              Logout
-            </button>
-          </form>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-        </>
-      }
-      {!user && <Link href="/login">Login</Link>}
-      {!user && <Link href="/signup">Sign up</Link>}
       <TransactionsTable
-        // data={MOCK_DATA}
-        data={transactions.allTransactions}
+        data={MOCK_DATA}
+        // data={transactions.allTransactions}
         tags={tags.allTags}
       />
     </main>
