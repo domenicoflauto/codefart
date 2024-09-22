@@ -35,12 +35,7 @@ export function TopBar({ user }: { user: any }) {
           <div className="flex flex-row gap-1">
             {!user.user &&
               <Link className={buttonVariants({ variant: "outline" })} href="/login">
-                Login
-              </Link>
-            }
-            {!user.user &&
-              <Link className={buttonVariants({ variant: "outline" })} href="/signup">
-                Sign up
+                Sign in
               </Link>
             }
           </div>

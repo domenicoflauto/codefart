@@ -1,10 +1,7 @@
 "use server"
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
-import { login } from "./actions";
 import {
   Card,
   CardContent,
@@ -13,6 +10,7 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import Link from "next/link";
 
 export default async function Page() {
   return (
@@ -22,15 +20,14 @@ export default async function Page() {
           <CardTitle>Sign in</CardTitle>
           <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
-        <form action={login}>
+        <form>
           <CardContent>
-            <Label htmlFor="username">Username</Label>
-            <Input name="username" id="username" />
-            <Label htmlFor="password">Password</Label>
-            <Input type="password" name="password" id="password" />
+
           </CardContent>
-          <CardFooter>
-            <Button className="w-full">Continue</Button>
+          <CardFooter className="flex flex-col gap-2">
+            <Link className={`${buttonVariants({ variant: "outline", size: "lg" })} w-full`} href="/login/github">
+              Sign in with GitHub
+            </Link>
           </CardFooter>
         </form>
       </Card>
