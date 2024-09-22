@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   Table,
@@ -30,14 +30,6 @@ export function TransactionsTable({
   const [csvData, setCsvData] = useState<any[]>([]);
   const [tagList, setTagList] = useState<tag[]>(tags)
 
-
-  useEffect(() => {
-    console.log("csvData", csvData)
-    console.log("tags", tags)
-    console.log("tagList", tagList)
-  }, [csvData, tags, tagList])
-
-
   const handleCreateAndSetTag = (value: string, index: number) => {
     createTag(value)
     const updatedTagList = [...tagList]
@@ -60,9 +52,9 @@ export function TransactionsTable({
     setCsvData(data);
   }
 
-  const handleSave = () => {
-    addTransactions(csvData);
-  }
+  // const handleSave = () => {
+  //   addTransactions(csvData);
+  // }
 
   return (
     <>
