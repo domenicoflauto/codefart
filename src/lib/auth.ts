@@ -15,10 +15,7 @@ export const google = new Google(
 	String(process.env.AUTH_GOOGLE_ID),
 	String(process.env.AUTH_GOOGLE_SECRET),
 	process.env.NEXT_PUBLIC_BASE_URL + "/login/google/callback"
-	// "http://localhost:3000/login/google/callback" // not sure about this
-	// "https://accounts.google.com" // not sure about this
 );
-
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 
@@ -37,6 +34,7 @@ export const lucia = new Lucia(adapter, {
 			// attributes has the type of DatabaseUserAttributes
 			username: attributes.username,
 			role: attributes.role,
+			avatar: attributes.avatar
 		};
 	}
 });
@@ -51,40 +49,5 @@ declare module "lucia" {
 interface DatabaseUserAttributes {
 	username: string;
 	role: "user" | "admin";
+	avatar: string | null;
 }
-
-// Validating callback
-// Instead of the user table, we can now use the OAuth account table to check if a user is already registered. If not, in a transaction, create the user and OAuth account.
-
-// const tokens = await githubAuth.validateAuthorizationCode(code);
-// const githubUser = await githubAuth.getUser(tokens.accessToken);
-
-// const existingAccount = await db
-// 	.table("oauth_account")
-// 	.where("provider_id", "=", "github")
-// 	.where("provider_user_id", "=", githubUser.id)
-// 	.get();
-
-// if (existingAccount) {
-// 	const session = await lucia.createSession(existingAccount.user_id, {});
-
-// 	// ...
-// }
-
-// const userId = generateIdFromEntropySize(10); // 16 characters long
-
-// await db.beginTransaction();
-// await db.table("user").insert({
-// 	id: userId,
-// 	username: githubUser.login
-// });
-// await db.table("oauth_account").insert({
-// 	provider_id: "github",
-// 	provider_user_id: githubUser.id,
-// 	user_id: userId
-// });
-// await db.commit();
-
-// const session = await lucia.createSession(userId, {});
-
-// // ...

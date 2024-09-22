@@ -50,7 +50,8 @@ export async function GET(request: Request): Promise<Response> {
 		await db.transaction(async (db) => {
       await db.insert(userTable).values({
         id: userId,
-        username: githubUser.login
+        username: githubUser.login,
+        avatar: githubUser.avatar_url
       })
       await db.insert(oAuthAccounts).values({
         providerId: "github",
@@ -85,4 +86,5 @@ export async function GET(request: Request): Promise<Response> {
 interface GitHubUser {
 	id: string;
 	login: string;
+  avatar_url: string;
 }

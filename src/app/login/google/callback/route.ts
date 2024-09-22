@@ -60,7 +60,8 @@ export async function GET(request: Request): Promise<Response> {
 		await db.transaction(async (db) => {
       await db.insert(userTable).values({
         id: userId,
-        username: googleUser.name.replace(/\s+/g, '')
+        username: googleUser.name.replace(/\s+/g, ''),
+				avatar: googleUser.picture
       })
       await db.insert(oAuthAccounts).values({
         providerId: "google",
@@ -99,4 +100,5 @@ export async function GET(request: Request): Promise<Response> {
 interface GoogleUser {
 	sub: string;
 	name: string;
+	picture: string;
 }
