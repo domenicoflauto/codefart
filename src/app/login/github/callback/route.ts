@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/db"
-import { userTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { oAuthAccounts, userTable } from "@/db/schema";
+import { sql } from "drizzle-orm";
 
 
 export async function GET(request: Request): Promise<Response> {
@@ -27,29 +27,38 @@ export async function GET(request: Request): Promise<Response> {
 		});
 		const githubUser: GitHubUser = await githubUserResponse.json();
 
-		// Replace this with your own DB client.
-    const existingUser = await db.select().from(userTable).where(eq(userTable.github_id, githubUser.id)).get();
+    const existingAccount = await db
+      .select()
+      .from(oAuthAccounts)
+      .where(sql`${oAuthAccounts.providerId} = 'github' and ${oAuthAccounts.providerUserId} = ${githubUser.id}`)
+      .get();
 
-		if (existingUser) {
-			const session = await lucia.createSession(existingUser.id, {});
-			const sessionCookie = lucia.createSessionCookie(session.id);
-			cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-			return new Response(null, {
-				status: 302,
-				headers: {
-					Location: "/"
-				}
-			});
-		}
+
+      if(existingAccount) {
+        const session = await lucia.createSession(existingAccount.userId, {});
+        const sessionCookie = lucia.createSessionCookie(session.id);
+        cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+        return new Response(null, {
+          status: 302,
+          headers: {
+            Location: "/"
+          }
+        });
+      }
 
 		const userId = generateIdFromEntropySize(10); // 16 characters long
 
-		// Replace this with your own DB client.
-		await db.insert(userTable).values({
-			id: userId,
-			github_id: githubUser.id,
-			username: githubUser.login
-		});
+		await db.transaction(async (db) => {
+      await db.insert(userTable).values({
+        id: userId,
+        username: githubUser.login
+      })
+      await db.insert(oAuthAccounts).values({
+        providerId: "github",
+        providerUserId: githubUser.id,
+        userId
+      })
+    });
 
 		const session = await lucia.createSession(userId, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);
