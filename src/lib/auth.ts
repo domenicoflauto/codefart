@@ -4,11 +4,21 @@ import { db } from "@/db";
 import { sessionTable } from "@/db/schema/sessionTable";
 import { userTable } from "@/db/schema/userTable";
 import { GitHub } from "arctic";
+import { Google } from "arctic";
 
 export const github = new GitHub(
 	String(process.env.AUTH_GITHUB_ID),
 	String(process.env.AUTH_GITHUB_SECRET)
 );
+
+export const google = new Google(
+	String(process.env.AUTH_GOOGLE_ID),
+	String(process.env.AUTH_GOOGLE_SECRET),
+	process.env.NEXT_PUBLIC_BASE_URL + "/login/google/callback"
+	// "http://localhost:3000/login/google/callback" // not sure about this
+	// "https://accounts.google.com" // not sure about this
+);
+
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 
@@ -25,7 +35,6 @@ export const lucia = new Lucia(adapter, {
 	getUserAttributes: (attributes) => {
 		return {
 			// attributes has the type of DatabaseUserAttributes
-			githubId: attributes.github_id,
 			username: attributes.username,
 			role: attributes.role,
 		};
@@ -40,7 +49,6 @@ declare module "lucia" {
 }
 
 interface DatabaseUserAttributes {
-	github_id: string;
 	username: string;
 	role: "user" | "admin";
 }

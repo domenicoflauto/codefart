@@ -28,6 +28,9 @@ export default async function Page() {
             <Link className={`${buttonVariants({ variant: "outline", size: "lg" })} w-full`} href="/login/github">
               Sign in with GitHub
             </Link>
+            <Link className={`${buttonVariants({ variant: "outline", size: "lg" })} w-full`} href="/login/google">
+              Sign in with Google
+            </Link>
           </CardFooter>
         </form>
       </Card>
