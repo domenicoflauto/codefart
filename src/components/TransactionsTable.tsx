@@ -27,7 +27,7 @@ export function TransactionsTable({
   data: any[],
   tags: tag[],
 }) {
-  const [csvData, setCsvData] = useState<any[]>([]);
+  const [csvData, setCsvData] = useState<any[]>(data || []);
   const [tagList, setTagList] = useState<tag[]>(tags)
 
   const handleCreateAndSetTag = (value: string, index: number) => {
@@ -52,9 +52,9 @@ export function TransactionsTable({
     setCsvData(data);
   }
 
-  // const handleSave = () => {
-  //   addTransactions(csvData);
-  // }
+  const handleSave = () => {
+    addTransactions(csvData);
+  }
 
   return (
     <>
@@ -70,14 +70,14 @@ export function TransactionsTable({
         </TableHeader>
         <TableBody>
           {
-            data.length > 0 && (
-              data.map((row, index) => (
+            csvData.length > 0 && (
+              csvData.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>{row["date"]}</TableCell>
                   <TableCell>{row["description"]}</TableCell>
                   <TableCell>
                     <TagsDropdown
-                      currentTag={data[index].tags}
+                      currentTag={csvData[index].tags}
                       tags={tagList}
                       handleCreateAndSetTag={value => handleCreateAndSetTag(value, index)}
                       handleSetTag={value => handleSetTag(value, index)}
@@ -88,7 +88,7 @@ export function TransactionsTable({
               )))}
         </TableBody>
       </Table>
-      {/* <Button onClick={handleSave}>Save</Button> */}
+      <Button onClick={handleSave}>Save</Button>
     </>
   )
 }
