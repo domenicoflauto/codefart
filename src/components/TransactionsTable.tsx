@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from 'react';
+import { useToast } from "@/hooks/use-toast"
+
 
 import {
   Table,
@@ -27,6 +29,7 @@ export function TransactionsTable({
   data: any[],
   tags: tag[],
 }) {
+  const { toast } = useToast()
   const [csvData, setCsvData] = useState<any[]>(data || []);
   const [tagList, setTagList] = useState<tag[]>(tags)
 
@@ -50,27 +53,43 @@ export function TransactionsTable({
 
   const handleDataParsed = (data: any) => {
     setCsvData(data);
+    toast({
+      title: "CSV Imported",
+      description: `${data.length} transactions loaded successfully.`,
+    });
   }
 
-  const handleSave = () => {
-    addTransactions(csvData);
+  const handleSave = async () => {
+    try {
+      await addTransactions(csvData);
+      toast({
+        title: "Transactions Saved",
+        description: "Your transactions have been successfully saved.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save transactions. Please try again.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
-    <>
+    <div className="space-y-4">
       <CsvUploadButton onDataParsed={handleDataParsed} />
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Tag</TableHead>
-            <TableHead align='right'>Amount(GBP)</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {
-            csvData.length > 0 && (
+      <>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Tag</TableHead>
+              <TableHead align='right'>Amount(GBP)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {csvData.length > 0 &&
               csvData.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>{row["date"]}</TableCell>
@@ -85,10 +104,11 @@ export function TransactionsTable({
                   </TableCell>
                   <TableCell align='right'>{row["amount"]}</TableCell>
                 </TableRow>
-              )))}
-        </TableBody>
-      </Table>
-      <Button onClick={handleSave}>Save</Button>
-    </>
+              ))}
+          </TableBody>
+        </Table>
+        <Button onClick={handleSave}>Save Transactions</Button>
+      </>
+    </div>
   )
 }

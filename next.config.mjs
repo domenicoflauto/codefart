@@ -18,7 +18,8 @@ const nextConfig = {
         pathname: '**'
       }
     ]
-  }
+  },
+  transpilePackages: ['papaparse']
 };
 
 export default nextConfig;

@@ -15,6 +15,10 @@ export function TopBar({ user }: { user: any }) {
           <Logo />
           <span className="text-lg font-bold">Codefart</span>
         </Link>
+        <nav className="flex flex-row gap-4 text-muted-foreground">
+          <Link className="hover:text-foreground" href="/import">Import</Link>
+          <Link className="hover:text-foreground" href="/">Transactions</Link>
+        </nav>
         <div className="flex flex-row items-center gap-4">
           <ModeToggle />
           {user.user &&
