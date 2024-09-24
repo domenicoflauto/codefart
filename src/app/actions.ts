@@ -12,6 +12,7 @@ import { lucia } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { validateRequest } from "@/lib/validate-request";
+import { eq } from "drizzle-orm";
 
 export async function logout() {
   console.log("logging out...")
@@ -99,5 +100,24 @@ export async function createTag(tag: string) {
 
   return {
     tag
+  }
+}
+
+export async function removeTag(tagName: string) {
+  await db.delete(tags).where(eq(tags.name, tagName));
+
+  return {
+    removedTag: tagName
+  }
+}
+
+export async function editTag(oldTagName: string, newTagName: string) {
+  await db.update(tags)
+    .set({ name: newTagName })
+    .where(eq(tags.name, oldTagName));
+
+  return {
+    oldTagName,
+    newTagName
   }
 }
