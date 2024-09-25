@@ -14,5 +14,6 @@ export const transactions = sqliteTable('transactions', {
 
 export const tags = sqliteTable('tags', {
   name: text('name').notNull().primaryKey(),
+  color: text('color'),
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 });

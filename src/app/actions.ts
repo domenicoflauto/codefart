@@ -12,7 +12,7 @@ import { lucia } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { validateRequest } from "@/lib/validate-request";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export async function logout() {
   console.log("logging out...")
@@ -88,18 +88,21 @@ export async function getTransactions() {
 
 export async function getTags() {
   const allTags = await db.select({
-    name: tags.name
+    name: tags.name,
+    color: tags.color
   }).from(tags)
   return { allTags }
 }
 
-export async function createTag(tag: string) {
+export async function createTag(tag: string, color?: string) {
   await db.insert(tags).values({
-    name: tag
+    name: tag,
+    color: color ?? "#000000"
   })
 
   return {
-    tag
+    tag,
+    color
   }
 }
 
@@ -111,13 +114,11 @@ export async function removeTag(tagName: string) {
   }
 }
 
-export async function editTag(oldTagName: string, newTagName: string) {
-  await db.update(tags)
-    .set({ name: newTagName })
-    .where(eq(tags.name, oldTagName));
+export async function updateTagColor(tagName: string, color: string) {
+  await db.update(tags).set({ color }).where(eq(tags.name, tagName));
 
   return {
-    oldTagName,
-    newTagName
+    tagName,
+    color
   }
 }

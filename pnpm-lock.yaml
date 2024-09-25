@@ -128,6 +128,9 @@ importers:
       react:
         specifier: ^18
         version: 18.3.1
+      react-color:
+        specifier: ^2.19.3
+        version: 2.19.3(react@18.3.1)
       react-day-picker:
         specifier: 8.10.1
         version: 8.10.1(date-fns@3.6.0)(react@18.3.1)
@@ -159,6 +162,9 @@ importers:
       '@types/react':
         specifier: ^18
         version: 18.3.3
+      '@types/react-color':
+        specifier: ^3.0.12
+        version: 3.0.12
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
@@ -621,6 +627,11 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
+
+  '@icons/material@0.2.4':
+    resolution: {integrity: sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==}
+    peerDependencies:
+      react: '*'
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -1948,6 +1959,9 @@ packages:
   '@types/qs@6.9.15':
     resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
 
+  '@types/react-color@3.0.12':
+    resolution: {integrity: sha512-pr3uKE3lSvf7GFo1Rn2K3QktiZQFFrSgSGJ/3iMvSOYWt2pPAJ97rVdVfhWxYJZ8prAEXzoP2XX//3qGSQgu7Q==}
+
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
@@ -1956,6 +1970,9 @@ packages:
 
   '@types/react@18.3.3':
     resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
+
+  '@types/reactcss@1.2.12':
+    resolution: {integrity: sha512-BrXUQ86/wbbFiZv8h/Q1/Q1XOsaHneYmCb/tHe9+M8XBAAUc2EHfdY0DY22ZZjVSaXr5ix7j+zsqO2eGZub8lQ==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -3186,6 +3203,9 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
+  lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
@@ -3212,6 +3232,9 @@ packages:
 
   magic-string@0.30.11:
     resolution: {integrity: sha512-+Wri9p0QHMy+545hKww7YAu5NyzF8iomPL/RQazugQ9+Ez4Ic3mERMd8ZTX5rfK944j+560ZJi8iAwgak1Ac7A==}
+
+  material-colors@1.2.6:
+    resolution: {integrity: sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==}
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
@@ -3536,6 +3559,11 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  react-color@2.19.3:
+    resolution: {integrity: sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==}
+    peerDependencies:
+      react: '*'
+
   react-day-picker@8.10.1:
     resolution: {integrity: sha512-TMx7fNbhLk15eqcMt+7Z7S2KF7mfTId/XJDjKE8f+IUcFn0l08/kI4FiYTL/0yuOLmEcbR4Fwe3GJf/NiiMnPA==}
     peerDependencies:
@@ -3620,6 +3648,11 @@ packages:
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
+
+  reactcss@1.2.3:
+    resolution: {integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==}
+    peerDependencies:
+      react: '*'
 
   read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -3883,6 +3916,9 @@ packages:
 
   tiny-invariant@1.3.3:
     resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
+
+  tinycolor2@1.6.0:
+    resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
 
   to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
@@ -4388,6 +4424,10 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/object-schema@2.0.3': {}
+
+  '@icons/material@0.2.4(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -5673,6 +5713,11 @@ snapshots:
   '@types/qs@6.9.15':
     optional: true
 
+  '@types/react-color@3.0.12':
+    dependencies:
+      '@types/react': 18.3.3
+      '@types/reactcss': 1.2.12
+
   '@types/react-dom@18.3.0':
     dependencies:
       '@types/react': 18.3.3
@@ -5685,6 +5730,10 @@ snapshots:
     dependencies:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
+
+  '@types/reactcss@1.2.12':
+    dependencies:
+      '@types/react': 18.3.3
 
   '@types/unist@2.0.11': {}
 
@@ -7126,6 +7175,8 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
+  lodash-es@4.17.21: {}
+
   lodash.merge@4.6.2: {}
 
   lodash@4.17.21: {}
@@ -7152,6 +7203,8 @@ snapshots:
   magic-string@0.30.11:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  material-colors@1.2.6: {}
 
   mdn-data@2.0.30: {}
 
@@ -7477,6 +7530,17 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
+  react-color@2.19.3(react@18.3.1):
+    dependencies:
+      '@icons/material': 0.2.4(react@18.3.1)
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      material-colors: 1.2.6
+      prop-types: 15.8.1
+      react: 18.3.1
+      reactcss: 1.2.3(react@18.3.1)
+      tinycolor2: 1.6.0
+
   react-day-picker@8.10.1(date-fns@3.6.0)(react@18.3.1):
     dependencies:
       date-fns: 3.6.0
@@ -7566,6 +7630,11 @@ snapshots:
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
+
+  reactcss@1.2.3(react@18.3.1):
+    dependencies:
+      lodash: 4.17.21
+      react: 18.3.1
 
   read-cache@1.0.0:
     dependencies:
@@ -7892,6 +7961,8 @@ snapshots:
       any-promise: 1.3.0
 
   tiny-invariant@1.3.3: {}
+
+  tinycolor2@1.6.0: {}
 
   to-fast-properties@2.0.0: {}
 
