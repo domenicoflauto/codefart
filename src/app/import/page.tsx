@@ -7,7 +7,10 @@ export default async function ImportPage() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Import Transactions</h1>
-      <TransactionsTable data={[]} tags={tags.allTags} />
+      <TransactionsTable
+        data={[]}
+        tags={tags.allTags.map(tag => ({ ...tag, color: tag.color || '' }))}
+      />
     </div>
   );
 }
