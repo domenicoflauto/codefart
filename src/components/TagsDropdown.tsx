@@ -12,10 +12,11 @@ import {
 
 type tag = {
   name: string;
+  color: string;
 }
 
 export function TagsDropdown({ tags, handleCreateAndSetTag, currentTag, handleSetTag }: {
-  tags: tag[],
+  tags: tag[] | null,
   handleCreateAndSetTag: (tag: string) => void,
   handleSetTag: (tag: string) => void,
   currentTag: string
@@ -24,7 +25,9 @@ export function TagsDropdown({ tags, handleCreateAndSetTag, currentTag, handleSe
   const [filteredOptions, setFilteredOptions] = useState(tags)
 
   useEffect(() => {
-    setFilteredOptions(tags.filter((tag) => tag.name.toLowerCase().includes(searchTerm.toLowerCase())))
+    if (tags) {
+      setFilteredOptions(tags.filter((tag) => tag.name.toLowerCase().includes(searchTerm.toLowerCase())))
+    }
   }, [searchTerm, tags])
 
   return (
@@ -33,8 +36,8 @@ export function TagsDropdown({ tags, handleCreateAndSetTag, currentTag, handleSe
         <Badge
           variant="secondary"
           className="cursor-pointer hover:bg-secondary/80"
+          style={{ backgroundColor: tags?.find(tag => tag.name === currentTag)?.color }}
         >
-          {/* {csvData[index].tags || 'No tag'} */}
           {currentTag || 'No tag'}
         </Badge>
       </DropdownMenuTrigger>
@@ -45,18 +48,23 @@ export function TagsDropdown({ tags, handleCreateAndSetTag, currentTag, handleSe
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {filteredOptions.map((option) => (
+        {filteredOptions?.map((option) => (
           <DropdownMenuItem
             key={option.name}
+            className="flex items-center gap-2"
             onClick={() => {
               handleSetTag(option.name)
               setSearchTerm('')
             }}
           >
+            <div
+              className="h-3 w-3 rounded-full"
+              style={{ backgroundColor: option.color }}
+            />
             {option.name}
           </DropdownMenuItem>
         ))}
-        {filteredOptions.length === 0 && (
+        {filteredOptions?.length === 0 && (
           <DropdownMenuItem
             key="create"
             onClick={() => {

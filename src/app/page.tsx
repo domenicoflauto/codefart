@@ -49,7 +49,7 @@ export default async function Home() {
       <TransactionsTable
         // data={MOCK_DATA}
         data={transactions.allTransactions}
-        tags={tags.allTags}
+        tags={tags.allTags.map(tag => ({ ...tag, color: tag.color || '' }))}
       />
     </main>
   );

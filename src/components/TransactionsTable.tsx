@@ -20,23 +20,34 @@ import { createTag, addTransactions } from '@/app/actions';
 
 type tag = {
   name: string;
+  color: string;
+}
+
+type transaction = {
+  date: string;
+  description: string;
+  tags: string | null;
+  amount: number;
 }
 
 export function TransactionsTable({
   data,
   tags,
 }: {
-  data: any[],
-  tags: tag[],
+  data: transaction[],
+  tags: tag[] | null,
 }) {
   const { toast } = useToast()
-  const [csvData, setCsvData] = useState<any[]>(data || []);
-  const [tagList, setTagList] = useState<tag[]>(tags)
+  const [csvData, setCsvData] = useState<transaction[]>(data || []);
+  const [tagList, setTagList] = useState<tag[] | null>(tags)
+  // { name: 'Groceries', color: '#FF5733' }
 
   const handleCreateAndSetTag = (value: string, index: number) => {
     createTag(value)
-    const updatedTagList = [...tagList]
-    setTagList([...updatedTagList, { name: value }])
+    if (tagList) {
+      const updatedTagList = [...tagList]
+      setTagList([...updatedTagList, { name: value, color: '#000000' }])
+    }
 
     const updatedData = [...csvData]
     updatedData[index].tags = value
@@ -61,7 +72,7 @@ export function TransactionsTable({
 
   const handleSave = async () => {
     try {
-      await addTransactions(csvData);
+      await addTransactions(csvData as any);
       toast({
         title: "Transactions Saved",
         description: "Your transactions have been successfully saved.",
@@ -96,8 +107,8 @@ export function TransactionsTable({
                   <TableCell>{row["description"]}</TableCell>
                   <TableCell>
                     <TagsDropdown
-                      currentTag={csvData[index].tags}
-                      tags={tagList}
+                      currentTag={csvData[index].tags || ''}
+                      tags={tagList || []}
                       handleCreateAndSetTag={value => handleCreateAndSetTag(value, index)}
                       handleSetTag={value => handleSetTag(value, index)}
                     />
