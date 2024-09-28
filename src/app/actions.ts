@@ -12,7 +12,8 @@ import { lucia } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { validateRequest } from "@/lib/validate-request";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, sum } from "drizzle-orm";
+
 
 export async function logout() {
   console.log("logging out...")
@@ -84,6 +85,24 @@ export async function getTransactions() {
     tags: transactions.tags
   }).from(transactions)
   return { allTransactions }
+}
+
+export async function getTransactionsByTag(tagName: string) {
+  const transactionsByTag = await db.select({
+    amount: transactions.amount,
+    description: transactions.description,
+    date: transactions.date,
+    tags: transactions.tags
+  }).from(transactions).where(eq(transactions.tags, tagName))
+  return { transactionsByTag }
+}
+
+export async function getTotalByTag(tagName: string) {
+  const totalByTag = await db.select({
+    value: sum(transactions.amount).as('value')
+  }).from(transactions)
+  .where(eq(transactions.tags, tagName))
+  return { totalByTag }
 }
 
 export async function getTags() {
